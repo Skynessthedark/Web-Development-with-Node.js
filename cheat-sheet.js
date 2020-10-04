@@ -146,3 +146,71 @@ asenkfonk(5)
     }
 
 asenkronakis()
+
+//Modules
+
+//Modülü başka bir dosyada kullanmak için export etmemiz gerekiyor.
+
+/* const foo = require("./module.js")
+module.export = foo;
+*/
+
+//Packages -> Node.js de en ufak bir işi yerine getiren herşey birer pakettir.
+
+let slugify = require("slugify")
+
+let txt = "Slugify ornek yazısı"
+console.log(slugify(txt, "-"))
+
+//Events -> Uygulama içerisinde gerçekleşen olaylar
+
+const events = require('events')
+const emitter = new events.EventEmitter()
+
+//Olayı tanımla
+emitter.on('selamla', ()=>{
+    console.log("Merhaba.")
+})
+//event trigger - Olayı tetikle
+emitter.emit('selamla')
+setTimeout(()=>{
+    emitter.emit('selamla')
+}, 3000)
+
+//Dosya İşlemleri
+const fs = require('fs')
+
+fs.readFile('demo.txt', (error, data)=>{
+    if(error){
+        console.log(error)
+    }
+    console.log(data.toString())
+    console.log("Dosya okuma işlemi bitti.")
+
+})
+
+let file = fs.readFileSync("demo.txt")
+console.log(file.toString())
+console.log("Dosya okuma işlemi bitti.")
+
+fs.appendFile("demo.txt", "Merhaba Dünya", (error)=>{
+    if(error){
+        console.log(error)
+    }
+    console.log("Ekleme işlemi tamamlandı.")
+})
+
+fs.writeFile("demo.txt", "Üstüne yazdım hehe :)", (error)=>{
+    if(error){
+        console.log(error)
+    }
+    console.log("Yazma işlemi tamamlandı.")
+})
+
+//Dosya silme
+fs.unlink("demo.txt", (error) =>{
+    if(error){
+        console.log(error)
+    }
+    console.log("Dosya Silindi.")
+})
