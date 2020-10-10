@@ -1,0 +1,31 @@
+html 
+    head
+        title pug dosyası
+    
+    body
+        =surname
+        br
+        span(style="color: red") Merhaba #{name}
+        br
+        include footer.pug
+        hr
+        //değişken tanımlama
+        - var okul = 'school'
+        - var sehir = 'city'
+        =okul
+        br
+        | Şehir kelimesinin ingilizcesi : #{sehir.toUpperCase()}
+        hr
+        //If kontrolü
+        - var sayi = 14
+        if !sayi
+            | Sayı bulunmuyor
+        else if sayi === 14
+            | Sayı 14
+        else
+            | Sayı #{sayi}
+        hr
+        //Döngüler
+        ul
+            each x in [1, 2, 3]
+                li= x

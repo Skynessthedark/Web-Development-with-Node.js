@@ -1,8 +1,19 @@
-const http = require('http')
+const { request, response } = require('express')
+const express = require('express')
+const app = express()
 
-const server = http.createServer((request, response) =>{
-    response.write("<p> Merhaba, ben bir http sunucusuyum. Nodemon ile. </p>")
-    response.end()
+app.set('view engine', 'pug')
+
+app.get('/', (req, res)=>{
+    res.render('index', {name: 'Göksenin', surname: 'Mert'})
 })
 
-server.listen(3000)
+app.get('/home', (req, res)=>{
+    res.render('home')
+})
+
+app.get('/contact', (req, res)=>{
+    res.render('contact')
+})
+
+app.listen(3000)
