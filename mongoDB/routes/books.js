@@ -7,7 +7,7 @@ const Book = require('../models/Book');
 
 router.post('/new', function(req, res, next) {
   const book = new Book({
-    title: "Udemy",
+    title: "Üçüncü",
     published: false,
     comments: [
       {message: "Çok güzel bir kitap."},
@@ -15,7 +15,7 @@ router.post('/new', function(req, res, next) {
     ],
     meta: {
       votes: 12,
-      favs: 5
+      favs: 7
     }
   });
   book.save((err, data)=>{
@@ -56,6 +56,58 @@ router.put('/update', (req, res) =>{
   Book.update({published: false}, {published: true}, (err, data) =>{
     if(err) console.log(err);
 
+    res.json(data);
+  });
+});
+
+router.get('/sort', (req, res)=>{
+  Book.find({}, (err, data)=>{
+    res.json(data);
+  }).sort({'meta.favs': 1});
+});
+
+//limit and skip
+router.get('/limitandskip', (req, res)=>{
+  Book.find({}, (err, data)=>{
+    res.json(data);
+  }).skip(2)
+  .limit(1);
+});
+
+//aggregate->kümeleme
+router.get('/aggregate', (req, res)=>{
+  Book.aggregate([
+    {
+      $match: {
+        //published: true
+      }
+    },
+    /*{
+      $group: {
+        _id: "$category",
+        adet: {$sum: 1}
+      }
+    },*/
+    {
+      $project: {
+        title: 1,
+        meta: 1
+      }
+    }
+  ], (err, data)=>{
+    res.json(data);
+  });
+});
+
+router.get('/aggregate-lookup', (req, res)=>{
+  Book.aggregate([
+    {
+      $lookup: {
+        from: 'users',
+        localField: ''
+      }
+    }
+  ], (err, data)=>{
     res.json(data);
   });
 });
