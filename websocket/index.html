@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <meta charset="UTF-8">
+        <title>WebSocket</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.1/socket.io.js" integrity="sha512-vGcPDqyonHb0c11UofnOKdSAt5zYRpKI4ow+v6hat4i96b7nHSn8PQyk0sT5L9RECyksp+SztCPP6bqeeGaRKg==" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script>
+            $(()=>{
+                const socket = io.connect('http://localhost:3000/');
+
+                socket.on('merhaba de', ()=>{
+                    $('merhaba').html('merhaba');
+                });
+
+                $('button').on('click', ()=>{
+                    socket.emit('selam ver', {});
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <p>Merhaba ben kullanıcı.</p><br>
+        <button>Tuşla</button>
+    </body>
+</html>
